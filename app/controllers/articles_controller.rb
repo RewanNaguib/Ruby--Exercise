@@ -1,5 +1,6 @@
 class ArticlesController < ApplicationController
-  # before_action :authenticate_user!
+  load_and_authorize_resource
+  before_action :authenticate_user!
     
   # http_basic_authenticate_with name: "dhh", password: "secret", except: [:index, :show]
     def index
@@ -7,10 +8,6 @@ class ArticlesController < ApplicationController
       end
 
 
-      def index2
-        @articles=Article.all
-        render :json => @articles
-      end 
 
 
       def show
@@ -26,6 +23,7 @@ class ArticlesController < ApplicationController
       
       def create
         @article = current_user.articles.build(article_params)
+        # @article.user_id=current_user.id
     
         if @article.save
           redirect_to @article

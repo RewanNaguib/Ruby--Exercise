@@ -1,8 +1,6 @@
 <h1>Listing Articles</h1>
 Our blog has <%= Article.public_count %> articles and counting!
-<% if user_signed_in?%>
 <%= link_to "New Article", new_article_path %>
-<% end %>
 <table>
 <tr>
 <th>Title</th>
@@ -17,10 +15,10 @@ Our blog has <%= Article.public_count %> articles and counting!
      <td> <%= article.text%> </td>
      
      <td> <%= link_to 'Show' , article_path(article) %> </td>
-     <% if article.user==current_user %>
-     <td> <%= link_to 'Edit' , edit_article_path(article) %> </td>
-     <td> <%= link_to 'Destroy' , article_path(article) , method: :delete , data: {confirm: 'Are you sure you want to delete this Record?'} %> </td>
-     <% end %>
+
+      <td><% if can? :Edit, article %> <%= link_to 'Edit', edit_article_path(article) %><% end %></td>
+      <td><% if can? :Destroy, article %> <%= link_to 'Destroy', article, method: :delete, data: { confirm: 'Are you sure you want to delete this record?' } %><% end %></td>
+
     </tr>
   <% end %>
 </table>

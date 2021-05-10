@@ -1,0 +1,2 @@
+module ApplicationapiControllerHelper
+end
